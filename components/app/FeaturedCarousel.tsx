@@ -7,8 +7,16 @@ import {
   CarouselApi,
   CarouselContent,
   CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
 } from "../ui/carousel";
 import Image from "next/image";
+import { Badge } from "../ui/badge";
+import { cn, formatPrice } from "@/lib/utils";
+import { Button } from "../ui/button";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import Autoplay from "embla-carousel-autoplay";
 
 type FeaturedProduct = FEATURED_PRODUCTS_QUERYResult[number];
 
@@ -44,16 +52,54 @@ export default function FeaturedCarousel({ products }: FeaturedCarouselProps) {
   }
 
   return (
-    <div>
-      <Carousel>
-        <CarouselContent>
+    <div className='relative w-full bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 dark:from-zinc-950 dark:via-zinc-900 dark:to-zinc-950'>
+      <Carousel
+        setApi={setApi}
+        opts={{
+          loop: false,
+          align: "start",
+        }}
+        plugins={[
+          Autoplay({
+            delay: 5000,
+            stopOnInteraction: false,
+            stopOnMouseEnter: true,
+          }),
+        ]}
+        className='w-full'
+      >
+        <CarouselContent className='-ml-0'>
           {products.map((product) => (
-            <CarouselItem key={product._id}>
+            <CarouselItem key={product._id} className='pl-0'>
               <FeaturedSlide product={product} />
             </CarouselItem>
           ))}
         </CarouselContent>
+
+        {/* Navigation arrows - positioned inside */}
+        <CarouselPrevious className='left-4 border-zinc-700 bg-zinc-800/80 text-white hover:bg-zinc-700 hover:text-white sm:left-8' />
+        <CarouselNext className='right-4 border-zinc-700 bg-zinc-800/80 text-white hover:bg-zinc-700 hover:text-white sm:right-8' />
       </Carousel>
+
+      {/* Dot indicators */}
+      {count > 1 && (
+        <div className='absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-2 sm:bottom-6'>
+          {Array.from({ length: count }).map((_, index) => (
+            <button
+              key={`dot-${index}`}
+              type='button'
+              onClick={() => scrollTo(index)}
+              className={cn(
+                "h-2 w-2 rounded-full transition-all duration-300",
+                current === index
+                  ? "w-6 bg-white"
+                  : "bg-white/40 hover:bg-white/60"
+              )}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
@@ -66,8 +112,8 @@ function FeaturedSlide({ product }: FeaturedSlideProps) {
   const mainImage = product.images?.[0]?.asset?.url;
 
   return (
-    <div>
-      <div>
+    <div className='flex min-h-[400px] flex-col md:min-h-[450px] md:flex-row lg:min-h-[500px]'>
+      <div className='relative h-64 w-full md:h-auto md:w-3/5'>
         {mainImage ? (
           <Image
             src={mainImage}
@@ -82,6 +128,49 @@ function FeaturedSlide({ product }: FeaturedSlideProps) {
             <span className='text-zinc-500'>No image</span>
           </div>
         )}
+
+        {/* Gradient overlay for image edge blending */}
+        <div className='absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-zinc-900/90 dark:to-zinc-950/90 hidden md:block' />
+        <div className='absolute inset-0 bg-gradient-to-t from-zinc-900/90 via-transparent to-transparent md:hidden' />
+      </div>
+
+      {/* Content Section - Right side (40% on desktop) */}
+      <div className='flex flex-col w-full justify-center px-6 py-8 md:w-2/5 md:px10 lg:px-16'>
+        {product.category && (
+          <Badge
+            variant='secondary'
+            className='mb-4 w-fit bg-amber-500/20 text-amber-400 hover:bg-amber-500/30'
+          >
+            {product.category.title}
+          </Badge>
+        )}
+
+        <h2 className='text-2xl text-white font-bold tracking-tight sm:text-3xl lg:text-4xl'>
+          {product.name}
+        </h2>
+
+        {product.description && (
+          <p className='mt-4 text-zinc-300 line-clamp-3 text-sm sm:text-base lg:text-lg'>
+            {product.description}
+          </p>
+        )}
+
+        <p className='mt-6 text-3xl  font-bold text-white lg:text-4xl'>
+          {formatPrice(product.price)}
+        </p>
+
+        <div className='mt-8 flex flex-col gap3 sm:flex-row'>
+          <Button
+            asChild
+            size='lg'
+            className='bg-white text-zinc-900 hover:bg-zinc-100'
+          >
+            <Link href={`/products/${product.slug}`}>
+              Shop Now
+              <ArrowRight className='ml-2 h-4 w-4' />
+            </Link>
+          </Button>
+        </div>
       </div>
     </div>
   );
