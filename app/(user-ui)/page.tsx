@@ -1,4 +1,6 @@
+import { CategoryTiles } from "@/components/app/CategoryTiles";
 import FeaturedCarousel from "@/components/app/FeaturedCarousel";
+import ProductSection from "@/components/app/ProductSection";
 import { ALL_CATEGORIES_QUERY } from "@/lib/sanity/queries/categories";
 import {
   FEATURED_PRODUCTS_QUERY,
@@ -8,7 +10,6 @@ import {
   FILTER_PRODUCTS_BY_RELEVANCE_QUERY,
 } from "@/lib/sanity/queries/products";
 import { sanityFetch } from "@/sanity/lib/live";
-import Image from "next/image";
 import { Suspense } from "react";
 
 interface PageProps {
@@ -82,7 +83,7 @@ export default async function Home({ searchParams }: PageProps) {
   console.log(featuredProducts);
 
   return (
-    <div className='flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-zinc-900'>
+    <div className='flex min-h-screen flex-col bg-zinc-50 font-sans dark:bg-zinc-900'>
       {/* Featured Products Carousel */}
       {featuredProducts?.length > 0 && (
         <Suspense fallback={<FeaturedCarousel products={featuredProducts} />}>
@@ -91,10 +92,33 @@ export default async function Home({ searchParams }: PageProps) {
       )}
 
       {/* Page Banner */}
-
-      {/* Category Tiles */}
+      <div className='border-b border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950'>
+        <div className='mx-auto max-w-7xl px-4 pt-8 sm:px-6 lg:px-6'>
+          <h1 className='text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100'>
+            Shop {categorySlug ? categorySlug : "All Products"}
+          </h1>
+          <p className='mt-1 text-sm text-zinc-600 dark:text-zinc-400'>
+            Premium shoes for your leg
+          </p>
+        </div>
+        {/* Category Tiles */}
+        <div className='mt-6'>
+          <CategoryTiles
+            categories={categories}
+            activeCategory={categorySlug || undefined}
+          />
+        </div>
+      </div>
 
       {/* Products Section */}
+
+      <div className='w-full max-w-full px-4 py-8 sm:px-6 lg:px-8'>
+        <ProductSection
+          categories={categories}
+          products={products}
+          searchQuery={searchQuery}
+        />
+      </div>
     </div>
   );
 }
