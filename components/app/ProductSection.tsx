@@ -8,6 +8,7 @@ import React, { useState } from "react";
 import { Button } from "../ui/button";
 import { PanelLeft, PanelLeftClose } from "lucide-react";
 import ProductGrid from "./ProductGrid";
+import ProductFilters from "./ProductFilters";
 
 interface ProductSectionProps {
   categories: ALL_CATEGORIES_QUERYResult;
@@ -69,7 +70,7 @@ export default function ProductSection({
             filtersOpen ? "w-full lg:w-72 lg:opacity-100" : "hidden lg:hidden"
           }`}
         >
-          Product FIlters
+          <ProductFilters categories ={categories} />
         </aside>
 
         {/* Product Grid - expands to full width when filters hidden */}
