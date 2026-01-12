@@ -3,6 +3,8 @@
 import { Minus, Plus, ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useCartActions, useCartItem } from "@/lib/store/cart-store-provider";
+import { toast } from "sonner";
 
 interface AddToCartButtonProps {
   productId: string;
@@ -21,16 +23,32 @@ export function AddToCartButton({
   stock,
   className,
 }: AddToCartButtonProps) {
-  const quantityInCart = 0;
+  const { addItem, updateQuantity } = useCartActions();
+  const cartItem = useCartItem(productId);
+
+  const quantityInCart = cartItem?.quantity ?? 0;
   const isOutOfStock = stock <= 0;
   const isAtMax = quantityInCart >= stock;
+
+  const handleAdd = () => {
+    if (quantityInCart < stock) {
+      addItem({ productId, name, price, image }, 1);
+      toast.success(`Added ${name}`);
+    }
+  };
+
+  const handleDecrement = () => {
+    if (quantityInCart > 0) {
+      updateQuantity(productId, quantityInCart - 1);
+    }
+  };
 
   // Out of stock
   if (isOutOfStock) {
     return (
       <Button
         disabled
-        variant='secondary'
+        variant="secondary"
         className={cn("h-11 w-full", className)}
       >
         Out of Stock
@@ -41,8 +59,11 @@ export function AddToCartButton({
   // Not in cart - show Add to Basket button
   if (quantityInCart === 0) {
     return (
-      <Button className={cn("h-11 w-full", className)}>
-        <ShoppingBag className='mr-2 h-4 w-4' />
+      <Button
+        onClick={handleAdd}
+        className={cn("h-11 w-full cursor-pointer", className)}
+      >
+        <ShoppingBag className="mr-2 h-4 w-4" />
         Add to Basket
       </Button>
     );
@@ -57,22 +78,24 @@ export function AddToCartButton({
       )}
     >
       <Button
-        variant='ghost'
-        size='icon'
-        className='h-full flex-1 rounded-r-none'
+        variant="ghost"
+        size="icon"
+        className="h-full flex-1 rounded-r-none cursor-pointer"
+        onClick={handleDecrement}
       >
-        <Minus className='h-4 w-4' />
+        <Minus className="h-4 w-4" />
       </Button>
-      <span className='flex-1 text-center text-sm font-semibold tabular-nums'>
+      <span className="flex-1 text-center text-sm font-semibold tabular-nums">
         {quantityInCart}
       </span>
       <Button
-        variant='ghost'
-        size='icon'
-        className='h-full flex-1 rounded-l-none disabled:opacity-20'
+        variant="ghost"
+        size="icon"
+        className="h-full flex-1 rounded-l-none disabled:opacity-20 cursor-pointer"
+        onClick={handleAdd}
         disabled={isAtMax}
       >
-        <Plus className='h-4 w-4' />
+        <Plus className="h-4 w-4" />
       </Button>
     </div>
   );

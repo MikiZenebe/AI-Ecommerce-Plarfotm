@@ -33,8 +33,8 @@ export default function ProductCard({ product }: ProductCardProps) {
   const hasMultipleImages = images.length > 1;
 
   return (
-    <Card className='group relative flex h-full flex-col overflow-hidden rounded-2xl border-0 bg-white p-0 shadow-sm ring-1 ring-zinc-950/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-zinc-950/10 dark:bg-zinc-900 dark:ring-white/10 dark:hover:shadow-zinc-950/50'>
-      <Link href={`/products/${product.slug}`} className='block'>
+    <Card className="group relative flex h-full flex-col overflow-hidden rounded-2xl border-0 bg-white p-0 shadow-sm ring-1 ring-zinc-950/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-zinc-950/10 dark:bg-zinc-900 dark:ring-white/10 dark:hover:shadow-zinc-950/50">
+      <Link href={`/products/${product.slug}`} className="block">
         <div
           className={cn(
             "relative overflow-hidden  bg-linear-to-br from-zinc-100 to-zinc-50 dark:from-zinc-800 dark:to-zinc-900",
@@ -46,23 +46,23 @@ export default function ProductCard({ product }: ProductCardProps) {
               src={displayedImageUrl}
               alt={product.name ?? "Product image"}
               fill
-              className='object-cover transition-transform duration-500 ease-out group-hover:scale-110'
-              sizes='(max-width:768px) 100vw, (max-width: 1280px) 50vw, 33vw'
+              className="object-cover transition-transform duration-500 ease-out group-hover:scale-110"
+              sizes="(max-width:768px) 100vw, (max-width: 1280px) 50vw, 33vw"
             />
           ) : (
-            <div className='flex h-full items-center justify-center text-zinc-400'>
+            <div className="flex h-full items-center justify-center text-zinc-400">
               <svg
-                className='h-16 w-16 opacity-30'
-                fill='none'
-                viewBox='0 0 24 24'
-                stroke='currentColor'
-                aria-hidden='true'
+                className="h-16 w-16 opacity-30"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                aria-hidden="true"
               >
                 <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   strokeWidth={1}
-                  d='M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z'
+                  d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
                 />
               </svg>
             </div>
@@ -72,7 +72,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           <div>
             {!isOutOfStock && <Badge>Out of Stock</Badge>}{" "}
             {product.category && (
-              <span className='absolute left-3 top-3 rounded-full bg-white/90 px-3 py-1 text-xs font-medium text-zinc-700 shadow-sm backdrop-blur-sm dark:bg-zinc-900/90 dark:text-zinc-300'>
+              <span className="absolute left-3 top-3 rounded-full bg-white/90 px-3 py-1 text-xs font-medium text-zinc-700 shadow-sm backdrop-blur-sm dark:bg-zinc-900/90 dark:text-zinc-300">
                 {product.category.title}
               </span>
             )}
@@ -82,11 +82,11 @@ export default function ProductCard({ product }: ProductCardProps) {
 
       {/* Thumbnail strip - only show if multiple images */}
       {hasMultipleImages && (
-        <div className='flex gap-2 border-t border-zinc-100 bg-zinc-50/50 p-3 dark:border-zinc-800 dark:bg-zinc-800/50'>
+        <div className="flex gap-2 border-t border-zinc-100 bg-zinc-50/50 p-3 dark:border-zinc-800 dark:bg-zinc-800/50">
           {images.map((image, index) => (
             <button
               key={image._key ?? index}
-              type='button'
+              type="button"
               className={cn(
                 "relative h-14 flex-1 overflow-hidden rounded-lg transition-all duration-200",
                 hoveredImageIndex === index
@@ -101,8 +101,8 @@ export default function ProductCard({ product }: ProductCardProps) {
                   src={image.asset.url}
                   alt={`${product.name} - view ${index + 1}`}
                   fill
-                  className='object-cover'
-                  sizes='100px'
+                  className="object-cover"
+                  sizes="100px"
                 />
               )}
             </button>
@@ -110,21 +110,21 @@ export default function ProductCard({ product }: ProductCardProps) {
         </div>
       )}
 
-      <CardContent className='flex grow flex-col justify-between'>
-        <Link href={`/products/${product.slug}`} className='block'>
-          <h3 className='line-clamp-2 text-base font-semibold leading-tight text-zinc-900 transition-colors group-hover:text-zinc-600 dark:text-zinc-100 dark:group-hover:text-zinc-300'>
+      <CardContent className="flex grow flex-col justify-between">
+        <Link href={`/products/${product.slug}`} className="block">
+          <h3 className="line-clamp-2 text-base font-semibold leading-tight text-zinc-900 transition-colors group-hover:text-zinc-600 dark:text-zinc-100 dark:group-hover:text-zinc-300">
             {product.name}
           </h3>
         </Link>
-        <div className='flex items-baseline justify-between gap-2'>
-          <p className='text-xl font-bold tracking-tight text-zinc-900 dark:text-white'>
+        <div className="flex items-baseline justify-between gap-2">
+          <p className="text-xl font-bold tracking-tight text-zinc-900 dark:text-white">
             {formatPrice(product.price)}
           </p>
           <StockBadge productId={product._id} stock={stock} />
         </div>
       </CardContent>
 
-      <CardFooter className='mt-auto p-5 pt-0'>
+      <CardFooter className="mt-auto p-5 pt-0">
         <AddToCartButton
           productId={product._id}
           name={product.name ?? "Unknown Product"}
