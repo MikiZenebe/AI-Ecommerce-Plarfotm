@@ -118,7 +118,7 @@ export default function ProductFilters({ categories }: ProductFiltersProps) {
     isActive: boolean;
     filterKey: string;
   }) => (
-    <div className='mb-2 flex items-center justify-between'>
+    <div className="mb-2 flex items-center justify-between">
       <span
         className={`block text-sm font-medium ${
           isActive
@@ -128,41 +128,41 @@ export default function ProductFilters({ categories }: ProductFiltersProps) {
       >
         {children}{" "}
         {isActive && (
-          <Badge className='ml-2 h-5 bg-amber-500 px-1.5 text-xs text-white hover:bg-amber-500'>
+          <Badge className="ml-2 h-5 bg-amber-500 px-1.5 text-xs text-white hover:bg-amber-500">
             Active
           </Badge>
         )}
       </span>
       {isActive && (
         <button
-          type='button'
+          type="button"
           onClick={() => clearSingleFilter(filterKey)}
-          className='text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200'
+          className="text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200"
           aria-label={`Clear ${filterKey} filter`}
         >
-          <X className='h-4 w-4' />
+          <X className="h-4 w-4" />
         </button>
       )}
     </div>
   );
 
   return (
-    <div className='space-y-6 rounded-lg border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-950'>
+    <div className="space-y-6 rounded-lg border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-950">
       {/* Clear Filters - Show at top when active */}
       {hasActiveFilters && (
-        <div className='rounded-lg border-2 border-amber-300 bg-amber-50 p-3 dark:border-amber-700 dark:bg-amber-950'>
-          <div className='mb-2 flex items-center justify-between'>
-            <span className='text-sm font-medium text-amber-800 dark:text-amber-200'>
+        <div className="rounded-lg border-2 border-amber-300 bg-amber-50 p-3 dark:border-amber-700 dark:bg-amber-950">
+          <div className="mb-2 flex items-center justify-between">
+            <span className="text-sm font-medium text-amber-800 dark:text-amber-200">
               {activeFilterCount}
               {""} {activeFilterCount === 1 ? "filter" : "filters"} applied
             </span>
           </div>
           <Button
-            size='sm'
+            size="sm"
             onClick={handleClearFilters}
-            className='w-full bg-amber-500 text-white hover:bg-amber-600 dark:bg-amber-600 dark:hover:bg-amber-700'
+            className="w-full bg-amber-500 text-white hover:bg-amber-600 dark:bg-amber-600 dark:hover:bg-amber-700"
           >
-            <X className='mr-2 h-4 w-4' />
+            <X className="mr-2 h-4 w-4" />
             Clear All Filters
           </Button>
         </div>
@@ -170,18 +170,18 @@ export default function ProductFilters({ categories }: ProductFiltersProps) {
 
       {/* Search */}
       <div>
-        <FilterLabel isActive={isSearchActive} filterKey='q'>
+        <FilterLabel isActive={isSearchActive} filterKey="q">
           Search
         </FilterLabel>
 
-        <form onSubmit={handleSearchSubmit} className='flex gap-2 items-center'>
+        <form onSubmit={handleSearchSubmit} className="flex gap-2 items-center">
           <Input
-            name='search'
-            placeholder='Search products...'
+            name="search"
+            placeholder="Search products..."
             defaultValue={currentSearch}
             className={`flex-1 ${isSearchActive ? "border-amber-500 ring-1 ring-amber-500 dark:border-amber-400 dark:ring-amber-400" : ""}`}
           />
-          <Button type='submit' size='sm'>
+          <Button type="submit" size="sm">
             Search
           </Button>
         </form>
@@ -189,7 +189,7 @@ export default function ProductFilters({ categories }: ProductFiltersProps) {
 
       {/* Category */}
       <div>
-        <FilterLabel isActive={isCategoryActive} filterKey='category'>
+        <FilterLabel isActive={isCategoryActive} filterKey="category">
           Category
         </FilterLabel>
         <Select
@@ -205,11 +205,11 @@ export default function ProductFilters({ categories }: ProductFiltersProps) {
                 : ""
             }
           >
-            <SelectValue placeholder='All Categories' />
+            <SelectValue placeholder="All Categories" />
           </SelectTrigger>
 
           <SelectContent>
-            <SelectItem value='all'>All Categories</SelectItem>
+            <SelectItem value="all">All Categories</SelectItem>
             {categories.map((category) => (
               <SelectItem key={category._id} value={category.slug ?? ""}>
                 {category.title}
@@ -221,7 +221,7 @@ export default function ProductFilters({ categories }: ProductFiltersProps) {
 
       {/* Color */}
       <div>
-        <FilterLabel isActive={isColorActive} filterKey='color'>
+        <FilterLabel isActive={isColorActive} filterKey="color">
           Color
         </FilterLabel>
         <Select
@@ -237,10 +237,10 @@ export default function ProductFilters({ categories }: ProductFiltersProps) {
                 : ""
             }
           >
-            <SelectValue placeholder='All Colors' />
+            <SelectValue placeholder="All Colors" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value='all'>All Colors</SelectItem>
+            <SelectItem value="all">All Colors</SelectItem>
             {COLORS.map((color) => (
               <SelectItem key={color.value} value={color.value}>
                 {color.label}
@@ -252,7 +252,7 @@ export default function ProductFilters({ categories }: ProductFiltersProps) {
 
       {/* Material */}
       <div>
-        <FilterLabel isActive={isMaterialActive} filterKey='material'>
+        <FilterLabel isActive={isMaterialActive} filterKey="material">
           Material
         </FilterLabel>
         <Select
@@ -268,10 +268,10 @@ export default function ProductFilters({ categories }: ProductFiltersProps) {
                 : ""
             }
           >
-            <SelectValue placeholder='All Materials' />
+            <SelectValue placeholder="All Materials" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value='all'>All Materials</SelectItem>
+            <SelectItem value="all">All Materials</SelectItem>
             {MATERIALS.map((material) => (
               <SelectItem key={material.value} value={material.value}>
                 {material.label}
@@ -283,8 +283,8 @@ export default function ProductFilters({ categories }: ProductFiltersProps) {
 
       {/* Price Range */}
       <div>
-        <FilterLabel isActive={isPriceActive} filterKey='price'>
-          Price Range: £{priceRange[0]} - £{priceRange[1]}
+        <FilterLabel isActive={isPriceActive} filterKey="price">
+          Price Range: ${priceRange[0]} - ${priceRange[1]}
         </FilterLabel>
         <Slider
           min={0}
@@ -304,14 +304,14 @@ export default function ProductFilters({ categories }: ProductFiltersProps) {
 
       {/* In Stock Only */}
       <div>
-        <label className='flex cursor-pointer items-center gap-3'>
+        <label className="flex cursor-pointer items-center gap-3">
           <input
-            type='checkbox'
+            type="checkbox"
             checked={currentInStock}
             onChange={(e) =>
               updateParams({ inStock: e.target.checked ? "true" : null })
             }
-            className='h-5 w-5 rounded border-zinc-300 text-amber-500 focus:ring-amber-500 dark:border-zinc-600 dark:bg-zinc-800'
+            className="h-5 w-5 rounded border-zinc-300 text-amber-500 focus:ring-amber-500 dark:border-zinc-600 dark:bg-zinc-800"
           />
           <span
             className={`text-sm font-medium ${
@@ -322,7 +322,7 @@ export default function ProductFilters({ categories }: ProductFiltersProps) {
           >
             Show only in-stock
             {isInStockActive && (
-              <Badge className='ml-2 h-5 bg-amber-500 px-1.5 text-xs text-white hover:bg-amber-500'>
+              <Badge className="ml-2 h-5 bg-amber-500 px-1.5 text-xs text-white hover:bg-amber-500">
                 Active
               </Badge>
             )}
@@ -332,7 +332,7 @@ export default function ProductFilters({ categories }: ProductFiltersProps) {
 
       {/* Sort */}
       <div>
-        <span className='mb-2 block text-sm font-medium text-zinc-700 dark:text-zinc-300'>
+        <span className="mb-2 block text-sm font-medium text-zinc-700 dark:text-zinc-300">
           Sort By
         </span>
         <Select
